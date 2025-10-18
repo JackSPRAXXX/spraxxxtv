@@ -4,121 +4,42 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SPRAXXX.TV</title>
-  <meta name="description" content="SPRAXXX.TV — classic feeds via Internet Archive." />
+  <meta name="description" content="SPRAXXX.TV — Beavis & Butt-Head Are Dead, streaming from the Internet Archive." />
   <style>
-    :root{
-      --bg:#06080b; --ink:#cfe6ff; --accent:#0ef;
-      --frame:#0e141b; --edge:#0a0f14;
+    html,body{
+      margin:0;
+      height:100%;
+      background:#000;
+      display:grid;
+      place-items:center;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; background: radial-gradient(1200px 600px at 50% -10%, #0a1016, #04070a 55%, #000 100%);
-      color:var(--ink); font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,Helvetica,sans-serif;
-      display:grid; place-items:center;
+    iframe{
+      width:100%;
+      height:100%;
+      max-width:960px;
+      max-height:720px;
+      border:0;
+      aspect-ratio:4/3;
+      background:#000;
     }
-    .wrap{
-      width:min(1100px,96vw); padding: clamp(12px,2vw,24px);
-    }
-    header{
-      text-align:center; margin-bottom: clamp(10px,1.8vw,16px);
-    }
-    .logo{
-      font-weight:900; letter-spacing:.18em; text-transform:uppercase;
-      font-size: clamp(16px,2.6vw,22px);
-      color: var(--accent); text-shadow: 0 0 16px rgba(0,255,255,.25);
-    }
-    .tv{
-      background: linear-gradient(180deg,#131a20 0%,#0d1319 100%);
-      border: 1px solid var(--frame);
-      border-radius: 14px;
-      padding: clamp(8px,1.2vw,12px);
-      box-shadow:
-        inset 0 0 0 3px var(--edge),
-        0 30px 80px rgba(0,0,0,.6);
-    }
-
-    /* Responsive player: keeps ~4:3 like the original 560x384 */
-    .screen{
-      position:relative; width:100%; aspect-ratio: 4 / 3;
-      background:#000; border-radius: 10px; overflow:hidden;
-      box-shadow: inset 0 0 0 2px #000, 0 0 32px rgba(0,0,0,.4);
-    }
-    .screen iframe{
-      position:absolute; inset:0; width:100%; height:100%; border:0;
-    }
-
-    /* Optional: stack more archive players below if you add them */
-    .stack{ display:grid; gap: clamp(10px,1.2vw,14px); }
-
-    footer{
-      text-align:center; opacity:.7; margin-top:12px; font-size:12px;
-    }
-    .links{
-      display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:10px;
-    }
-    .pill{
-      padding:8px 12px; border-radius:999px; border:1px solid #0c1218; background:#0a0f14; color:#cfe6ff; text-decoration:none; font-weight:700;
-    }
-    .pill:hover{ border-color:#0f1f28 }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="logo">SPRAXXX.TV</div>
-    </header>
-
-    <main class="tv">
-      <div class="stack">
-
-        <!-- PLAYER 1 — Internet Archive embed (your link) -->
-        <div class="screen">
-          <iframe
-            src="https://archive.org/embed/videoID_download_archive_201906"
-            allow="fullscreen; autoplay"
-            webkitallowfullscreen="true"
-            mozallowfullscreen="true"
-            allowfullscreen>
-          </iframe>
-        </div>
-
-<!-- PLAYER 1 — Beavis & Butt-Head Are Dead -->
-<div class="screen">
   <iframe
-    src="https://archive.org/embed/s-7-ep-41-beavis-butthead-are-dead"
-    allow="fullscreen; autoplay"
+    src="https://archive.org/embed/s-7-ep-41-beavis-butthead-are-dead?autoplay=1"
+    allow="autoplay; fullscreen"
     webkitallowfullscreen="true"
     mozallowfullscreen="true"
     allowfullscreen>
   </iframe>
-</div>
 
-        <div class="screen">
-          <iframe
-            src="https://archive.org/embed/ANOTHER_ARCHIVE_ID"
-            allow="fullscreen; autoplay"
-            webkitallowfullscreen="true"
-            mozallowfullscreen="true"
-            allowfullscreen>
-          </iframe>
-        </div>
-        -->
-
-      </div>
-
-      <!-- Minimal network links (kept tiny). Remove if you want *only* the player. -->
-      <div class="links">
-        <a class="pill" href="https://spraxxx.com">SPRAXXX.COM</a>
-        <a class="pill" href="https://spraxxx.ai">SPRAXXX.AI</a>
-        <a class="pill" href="https://channel1.spraxxx.tv">Channel 1</a>
-        <a class="pill" href="https://channel2.spraxxx.tv">Channel 2</a>
-      </div>
-    </main>
-
-    <footer>
-      If the player doesn’t load, <a href="https://archive.org/details/videoID_download_archive_201906">open on Internet Archive</a>.
-    </footer>
-  </div>
+  <script>
+    // if the archive player ends, reload to start again
+    window.addEventListener('message', e => {
+      if (e.data === 'Ended') location.reload();
+    });
+    // force reload every 30 minutes just in case
+    setTimeout(()=>location.reload(), 30*60*1000);
+  </script>
 </body>
 </html>
