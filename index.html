@@ -1,1 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SPRAXXX.TV — The Boob Tube</title>
+  <meta name="description" content="SPRAXXX.TV — flip channels, hit the lounge, and blast off." />
+  <meta property="og:title" content="SPRAXXX.TV — The Boob Tube" />
+  <meta property="og:description" content="Flip channels. Enter the Lounge. SPRAXXX ecosystem portal." />
+  <meta property="og:type" content="website" />
+  <style>
+    :root{
+      --ink:#0ef;          /* aqua glow */
+      --glass:#0a0f14;     /* tube face */
+      --steel:#1a1f24;     /* body */
+      --chrome:#58616b;    /* trim */
+      --lime:#b6ff00;      /* accent */
+      --scan:rgba(255,255,255,.05);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,Helvetica,sans-serif;
+      background: radial-gradient(1200px 600px at 50% -10%, #091018 0%, #05080c 35%, #020408 60%, #000 100%);
+      color:#e6f3ff;
+      display:grid;
+      place-items:center;
+    }
+    a{color:inherit;text-decoration:none}
+    /* Frame */
+    .tv{
+      width:min(950px,94vw);
+      aspect-ratio: 16/9;
+      background: linear-gradient(180deg,#20262c 0,#14191f 60%,#0b1015 100%);
+      border-radius: 24px;
+      box-shadow:
+        0 0 0 3px #0c1117 inset,
+        0 0 40px rgba(0,255,255,.08),
+        0 30px 90px rgba(0,0,0,.75);
+      padding: clamp(10px, 2vw, 18px);
+      position:relative;
+      display:grid;
+      grid-template-columns: 1fr clamp(160px,22vw,240px);
+      gap: clamp(10px, 2vw, 24px);
+    }
+    /* Screen */
+    .screen{
+      background: radial-gradient(180% 100% at 50% 0%, #10161d 0%, #0b1016 50%, #060a0f 100%);
+      border-radius: 18px;
+      position:relative;
+      overflow:hidden;
+      border: 2px solid #0d1218;
+      box-shadow:
+        0 0 0 2px #0b1015 inset,
+        0 0 0 6px #04070a inset,
+        0 0 60px rgba(0,255,255,.06) inset,
+        0 0 50px rgba(0,255,255,.08);
+    }
+    /* Scanlines & glow */
+    .screen:before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(transparent 96%, var(--scan) 100%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 1px 3px);
+      background-size: 100% 4px, 100% 3px;
+      pointer-events:none;
+      mix-blend-mode: screen;
+      animation: hum 3.2s ease-in-out infinite;
+    }
+    @keyframes hum{
+      0%,100%{opacity:.35; filter:brightness(1)}
+      50%{opacity:.45; filter:brightness(1.08)}
+    }
+    .id{
+      position:absolute; left:18px; top:12px;
+      font-weight:800; letter-spacing:.2em; text-transform:uppercase;
+      font-size: clamp(12px, 1.8vw, 16px);
+      color: var(--ink);
+      text-shadow: 0 0 8px rgba(0,255,255,.35);
+    }
+    .lounge-wrap{
+      height:100%; display:grid; place-items:center; text-align:center; padding:3vw;
+    }
+    .title{
+      font-size: clamp(26px, 5vw, 56px);
+      line-height:1.02;
+      margin:0 0 .5rem;
+      font-weight:900;
+      letter-spacing:.02em;
+      text-shadow: 0 0 22px rgba(0,255,255,.25);
+    }
+    .subtitle{
+      margin:.1rem 0 1.2rem; opacity:.85; font-size: clamp(14px, 2.2vw, 18px);
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:.6rem;
+      padding: clamp(10px,1.4vw,14px) clamp(16px,2vw,22px);
+      border-radius: 12px;
+      background: linear-gradient(180deg,#0b1922,#08141b);
+      border:1px solid #0d1c25;
+      box-shadow: 0 10px 24px rgba(0,255,255,.08), 0 0 0 2px rgba(0,255,255,.08) inset;
+      font-weight:800; letter-spacing:.02em;
+      transition: transform .08s ease, box-shadow .2s ease, background .2s ease;
+      outline: none;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 14px 28px rgba(0,255,255,.14), 0 0 0 2px rgba(0,255,255,.14) inset;}
+    .btn:active{ transform: translateY(0) scale(.99)}
+    .btn .dot{ width:.55em; height:.55em; border-radius:50%; background: var(--lime); box-shadow: 0 0 10px var(--lime);}
+    .panel{
+      background: linear-gradient(180deg,#171d23,#0f151b);
+      border: 1px solid #0c1218;
+      border-radius: 16px;
+      padding: clamp(12px, 1.8vw, 18px);
+      box-shadow: inset 0 0 0 2px #0a0f14, 0 0 30px rgba(0,0,0,.45);
+      display:flex; flex-direction:column; gap: clamp(10px,1.6vw,14px);
+    }
+    .panel h2{
+      margin:0 0 .4rem; font-size: clamp(12px,1.6vw,14px); text-transform:uppercase; letter-spacing:.22em; color:#8fb7c9;
+    }
+    .knobs{ display:grid; grid-template-columns: 1fr 1fr; gap:8px}
+    .knob{
+      display:flex; align-items:center; justify-content:center;
+      padding: 12px 10px; border-radius: 10px;
+      background: radial-gradient(220% 120% at 50% 0%, #2a333c 0, #1b232a 50%, #131a20 100%);
+      border:1px solid #0e141a; color:#cfe6ff; font-weight:800;
+      text-shadow: 0 1px 0 rgba(0,0,0,.4);
+      box-shadow: 0 6px 16px rgba(0,0,0,.35), inset 0 0 0 2px rgba(255,255,255,.02);
+      transition: transform .06s ease, box-shadow .2s ease;
+    }
+    .knob:hover{ transform: translateY(-1px); box-shadow: 0 9px 20px rgba(0,0,0,.5), inset 0 0 0 2px rgba(255,255,255,.04)}
+    .knob:active{ transform: translateY(0) scale(.99)}
+    .knob small{opacity:.7; font-weight:700; margin-left:.4rem}
+    .row{
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    .pill{
+      flex:1 1 auto; text-align:center;
+      padding:10px 12px; border-radius: 999px;
+      background:#0f151b; border:1px solid #0d1218; font-weight:700; opacity:.9;
+    }
+    .brand{
+      position:absolute; right:16px; bottom:10px; opacity:.65; font-weight:800; letter-spacing:.25em; font-size:11px
+    }
+    footer{
+      margin-top: 10px; opacity:.7; font-size:12px; text-align:center
+    }
+    .fallback{ margin-top:12px; display:none }
+    @media (max-width: 720px){ .fallback{ display:block } }
+    /* Focus visible for keyboard users */
+    a:focus-visible{
+      outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <main class="tv" role="main">
+    <!-- SCREEN -->
+    <section class="screen" aria-label="CRT display">
+      <div class="id">SPRAXXX.TV</div>
+      <div class="lounge-wrap">
+        <div>
+          <h1 class="title">Welcome to the Lounge</h1>
+          <p class="subtitle">Flip a channel or enter the lounge to meet the crew.</p>
+          <p><a class="btn" id="lounge" href="https://chat.spraxxx.com/lounge"><span class="dot"></span> Enter the Lounge</a></p>
+        </div>
+      </div>
+      <div class="brand">© SPRAXXX</div>
+    </section>
 
+    <!-- CONTROL PANEL -->
+    <aside class="panel" aria-label="Channel selector and links">
+      <h2>Channels</h2>
+      <div class="knobs">
+        <a class="knob" data-key="1" href="https://channel1.spraxxx.tv">CH-1 <small>Canada</small></a>
+        <a class="knob" data-key="2" href="https://channel2.spraxxx.tv">CH-2 <small>USA</small></a>
+        <a class="knob" data-key="3" href="https://channel3.spraxxx.tv">CH-3 <small>Japan</small></a>
+        <a class="knob" data-key="4" href="https://channel4.spraxxx.tv">CH-4 <small>Retro Ads</small></a>
+        <a class="knob" data-key="5" href="https://channel5.spraxxx.tv">CH-5 <small>Music</small></a>
+        <a class="knob" data-key="6" href="https://channel6.spraxxx.tv">CH-6 <small>Live</small></a>
+        <a class="knob" data-key="7" href="https://channel7.spraxxx.tv">CH-7 <small>Docs</small></a>
+        <a class="knob" data-key="8" href="https://channel8.spraxxx.tv">CH-8 <small>Arcade</small></a>
+      </div>
+
+      <h2>SPRAXXX Network</h2>
+      <div class="row">
+        <a class="pill" href="https://spraxxx.com">SPRAXXX.COM</a>
+        <a class="pill" href="https://spraxxx.ai">SPRAXXX.AI</a>
+        <a class="pill" href="https://facebook.com">Facebook</a>
+      </div>
+
+      <h2>Portals</h2>
+      <div class="row">
+        <a class="pill" href="https://chat.spraxxx.com/lounge">Lounge</a>
+        <a class="pill" href="https://chat.spraxxx.com">Chat Portal</a>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    Tip: press <strong>1–8</strong> for channels or <strong>L</strong> for Lounge.
+    <div class="fallback">
+      Fallback links:
+      <a href="https://channel1.spraxxx.tv">Ch1</a> ·
+      <a href="https://channel2.spraxxx.tv">Ch2</a> ·
+      <a href="https://spraxxx.com">.com</a> ·
+      <a href="https://spraxxx.ai">.ai</a> ·
+      <a href="https://chat.spraxxx.com/lounge">lounge</a>
+    </div>
+  </footer>
+
+  <noscript>
+    <style>footer{opacity:1}</style>
+  </noscript>
+
+  <script>
+    // Keyboard shortcuts: 1-9 for channels, L for Lounge
+    (function(){
+      const byKey = {};
+      document.querySelectorAll('.knob[data-key]').forEach(a => byKey[a.dataset.key]=a.href);
+      const lounge = document.getElementById('lounge')?.href;
+      addEventListener('keydown', e=>{
+        const k = e.key.toLowerCase();
+        if(byKey[k]) { location.href = byKey[k]; }
+        if(lounge && (k==='l')) { location.href = lounge; }
+      });
+    })();
+  </script>
+</body>
+</html>
